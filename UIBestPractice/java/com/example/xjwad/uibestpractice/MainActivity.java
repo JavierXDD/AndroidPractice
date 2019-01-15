@@ -37,25 +37,36 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String content = inputText.getText().toString();
+                //价值一个亿的AI回复
+                String reContent = content.replaceAll("吗?([?？])*","")+"!";
+
                 if (!"".equals(content)){
-                    Msg msg = new Msg(content,Msg.TYPE_SEND);
-                    msgList.add(msg);
+                    Msg sendMsg = new Msg(content,Msg.TYPE_SEND);
+                    msgList.add(sendMsg);
                     //用于通知列表中有新的数据插入
                     adapter.notifyItemInserted(msgList.size()-1);
                     //将显示的数据定位到走后一行，保证可以看到最后发出的消息
                     msgRecyclerView.scrollToPosition(msgList.size()-1);
                     inputText.setText("");
+
+                    Msg reMsg = new Msg(reContent,Msg.TYPE_RECIVED);
+                    msgList.add(reMsg);
+                    //用于通知列表中有新的数据插入
+                    adapter.notifyItemInserted(msgList.size()-1);
+                    //将显示的数据定位到走后一行，保证可以看到最后发出的消息
+                    msgRecyclerView.scrollToPosition(msgList.size()-1);
+
                 }
             }
         });
     }
 
     private void initMsgs(){
-        Msg msg1 = new Msg("hello guy.",Msg.TYPE_RECIVED);
+        Msg msg1 = new Msg("你好，我是小X",Msg.TYPE_RECIVED);
         msgList.add(msg1);
-        Msg msg2 = new Msg("hello.who is that?",Msg.TYPE_SEND);
+        Msg msg2 = new Msg("你好",Msg.TYPE_SEND);
         msgList.add(msg2);
-        Msg msg3 = new Msg("this is xxx,long long long long long  long long",Msg.TYPE_RECIVED);
+        Msg msg3 = new Msg("你有什么问题吗？你可以试着问我‘在吗？’",Msg.TYPE_RECIVED);
         msgList.add(msg3);
     }
 }
